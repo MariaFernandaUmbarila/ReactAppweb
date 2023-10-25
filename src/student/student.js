@@ -1,50 +1,37 @@
 import * as React from "react";
+import { useState, useEffect } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
 
 const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "firstName", headerName: "First name", width: 130 },
-    { field: "lastName", headerName: "Last name", width: 130 },
-    {
-        field: "age",
-        headerName: "Age",
-        type: "number",
-        width: 90,
-    },
-    {
-        field: "fullName",
-        headerName: "Full name",
-        description: "This column has a value getter and is not sortable.",
-        sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    },
-];
-
-const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+    { field: "Id", headerName: "ID", width: 70, valueGetter: (params) => params.row.id },
+    { field: "Nombre", headerName: "Nombre", width: 130, valueGetter: (params) => params.row.nombre },
+    { field: "Apellido", headerName: "Apellido", width: 130, valueGetter: (params) => params.row.apellido },
+    { field: "Correo", headerName: "Correo", width: 250, valueGetter: (params) => params.row.correo },
 ];
 
 export default function DataTable() {
+
+    const [rows, setData] = useState([]);
+
+    const tableContainerStyle = {
+        margin: 'auto',
+        width: '80%'
+    };
+
+    useEffect(() => {
+    fetch('http://localhost:8081/api/get_all_students')
+        .then((response) => response.json())
+        .then((data) => setData(data))
+        .catch((error) => console.error('Error fetching data:', error));
+    }, []);
+
     return (
-        <div style={{ height: 400, width: "100%" }}>
-            <DataGrid
+        <div>
+            <h1>Gestión de los estudiantes</h1>
+            <h3>A continuación se muestra la lista de estudiantes, podrá ordenar, editar o eliminar los registros</h3>
+            <DataGrid style={tableContainerStyle}
                 rows={rows}
                 columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
-                    },
-                }}
                 pageSizeOptions={[5, 10]}
                 checkboxSelection
             />
