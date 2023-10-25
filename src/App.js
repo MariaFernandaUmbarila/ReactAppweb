@@ -1,24 +1,13 @@
 import './App.css';
-import CenteredTable from './student/student';
-import DefaulAppBar from './utils/navbar';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+import DataTable from './student/Students';
+import DefaulAppBar from './utils/Navbar';
 
 function App() {
-  return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline/>
+  return (    
       <div className="App">
         <DefaulAppBar/>
-        <CenteredTable/>
+        <DataTable/>
       </div>
-    </ThemeProvider> 
   );
 }
 

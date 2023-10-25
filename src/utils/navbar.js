@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Registrar estudiante', 'Registrar docente', 'Agregar calificación'];
+const pages = ['Registrar estudiante', 'Registrar docente'];
 
 function DefaulAppBar() {
 
