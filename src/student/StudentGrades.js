@@ -18,7 +18,7 @@ function StudentGrades({ open, onClose, student }) {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Detalle del Estudiante</DialogTitle>
+      <DialogTitle>Detalle del Estudiante </DialogTitle>
       <DialogContent>
         <TableContainer>
           <Table>

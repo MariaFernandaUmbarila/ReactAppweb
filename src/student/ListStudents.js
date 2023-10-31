@@ -21,7 +21,11 @@ export default function DataTable() {
         },
         {
             field: "Notas", headerName: "Notas", width: 130, renderCell: (params) => (
-                <button onClick={() => handleNotesClick(params.row.id)}>Ver Notas</button>
+                <button
+                    className="custom-button"
+                    onClick={() => handleNotesClick(params.row.id)}>
+                    Ver Notas
+                </button>
             )
         },
     ];
@@ -42,6 +46,7 @@ export default function DataTable() {
 
     const handleNotesClick = (id) => {
         console.log(`Clicked on "Ver Notas" button for student with ID: ${id}`);
+        
         fetch(`http://localhost:8081/api/get_student_summary/${id}`)
             .then(response => response.json())
             .then(data => {
@@ -53,7 +58,7 @@ export default function DataTable() {
             });
     };
 
-    
+
     const tableContainerStyle = {
         margin: 'auto',
         width: '80%'
