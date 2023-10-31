@@ -6,12 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 
-function PopupForm({ open, onClose, onSubmit }) {
-
-  const [formData, setFormData] = useState({});
+function PopupForm({ open, onClose, onRegister }) {
+  const [formData, setFormData] = useState({ nombre: '', apellido: '', correo: '' });
 
   const handleFormSubmit = () => {
-    onSubmit(formData);
+    onRegister(formData);
     onClose();
   };
 
@@ -22,28 +21,36 @@ function PopupForm({ open, onClose, onSubmit }) {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Popup Form</DialogTitle>
+      <DialogTitle>Nuevo Estudiante</DialogTitle>
       <DialogContent>
         <TextField
-          name="field1"
-          label="Field 1"
+          name="nombre"
+          label="Nombre"
           fullWidth
+          value={formData.nombre}
           onChange={handleInputChange}
         />
         <TextField
-          name="field2"
-          label="Field 2"
+          name="apellido"
+          label="Apellido"
           fullWidth
+          value={formData.apellido}
           onChange={handleInputChange}
         />
-        {/* Add more form fields as needed */}
+        <TextField
+          name="correo"
+          label="Correo"
+          fullWidth
+          value={formData.correo}
+          onChange={handleInputChange}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
         <Button onClick={handleFormSubmit} color="primary">
-          Submit
+          Registrar
         </Button>
       </DialogActions>
     </Dialog>

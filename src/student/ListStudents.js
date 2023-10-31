@@ -41,10 +41,10 @@ export default function DataTable() {
     };
 
     const handleNotesClick = (id) => {
+        console.log(`Clicked on "Ver Notas" button for student with ID: ${id}`);
         fetch(`http://localhost:8081/api/get_student_summary/${id}`)
             .then(response => response.json())
             .then(data => {
-                console.log("Data received from API:", data); // Verifica que los datos se reciban correctamente
                 setSelectedStudent(data);
                 setIsDialogOpen(true);
             })
@@ -52,6 +52,8 @@ export default function DataTable() {
                 console.error('Error fetching student data:', error);
             });
     };
+
+    
     const tableContainerStyle = {
         margin: 'auto',
         width: '80%'

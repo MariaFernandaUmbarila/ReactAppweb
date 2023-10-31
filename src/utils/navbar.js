@@ -10,6 +10,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import PopupForm from '../student/CreateEditStudent';
 
 
+
 function DefaulAppBar() {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -19,10 +20,6 @@ function DefaulAppBar() {
   };
 
   const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const handleMenuOpen = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
 
   const handleMenuClose = () => {
     setAnchorElNav(null);
@@ -38,8 +35,27 @@ function DefaulAppBar() {
   };
 
   const handleFormSubmit = (formData) => {
-    // Handle the submitted form data
-    console.log('Form data:', formData);
+    // Make a POST request to create a new student
+    fetch('http://localhost:8081/api/create_student', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Handle success, e.g., show a success message or update the list of students
+          console.log('Student registration successful');
+        } else {
+          // Handle errors, e.g., show an error message
+          console.error('Student registration failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Error registering student:', error);
+      });
+      console.log('Form data:', formData);
   };
 
   return (
@@ -87,8 +103,7 @@ function DefaulAppBar() {
             >
               <MenuItem onClick={handleFormOpen}>Registrar estudiante</MenuItem>
             </Menu>
-            <PopupForm open={isFormOpen} onClose={handleFormClose} onSubmit={handleFormSubmit} />
-          </Box>
+            <PopupForm open={isFormOpen} onClose={handleFormClose} onRegister={handleFormSubmit} />          </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
