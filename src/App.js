@@ -1,6 +1,6 @@
 import './App.css';
 import DataTable from './student/ListStudents';
-import DefaulAppBar from './utils/Navbar';
+import DefaulAppBar from './utils/navbar';
 
 function App() {
   return (    
