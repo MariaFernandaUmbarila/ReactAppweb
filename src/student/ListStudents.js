@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
 import MultiIconCell from "./IconsStudent";
 import StudentGrades from './StudentGrades';
+import PopupForm from './CreateEditStudent.js';
 
 export default function DataTable() {
 
@@ -33,9 +34,16 @@ export default function DataTable() {
     const [rows, setData] = useState([]);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [editedStudent, setEditedStudent] = useState(null);
 
     const handleEditClick = (id) => {
-        
+        // Buscar al estudiante en 'rows' con el ID correspondiente
+        const studentToEdit = rows.find((student) => student.id === id);
+        if (studentToEdit) {
+            setEditedStudent(studentToEdit);
+            setIsFormOpen(true);
+        }
     };
 
     const handleDeleteClick = (id) => {
@@ -86,7 +94,19 @@ export default function DataTable() {
                     student={selectedStudent}
                 />
             )}
-        </div>
+            {isFormOpen && editedStudent && (
+                <PopupForm
+                    open={isFormOpen}
+                    onClose={() => setIsFormOpen(false)}
+                    onRegister={(editedData) => {
+                        // Aquí puedes enviar los datos editados al servidor y actualizar tus datos en la aplicación
+                        // Luego, cierra el formulario
+                        setIsFormOpen(false);
+                    }}
+                    formData={editedStudent} // Pasa los datos del estudiante a editar al formulario
+                />
+            )}
+        </div >
     );
 }
 
