@@ -35,7 +35,7 @@ export default function DataTable() {
     const [selectedStudent, setSelectedStudent] = useState(null);
 
     const handleEditClick = (id) => {
-        console.log(`Edit icon clicked for ID: ${id}`);
+        
     };
 
     const handleDeleteClick = (id) => {
@@ -45,8 +45,6 @@ export default function DataTable() {
     };
 
     const handleNotesClick = (id) => {
-        console.log(`Clicked on "Ver Notas" button for student with ID: ${id}`);
-        
         fetch(`http://localhost:8081/api/get_student_summary/${id}`)
             .then(response => response.json())
             .then(data => {

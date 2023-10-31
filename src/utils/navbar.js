@@ -35,7 +35,6 @@ function DefaulAppBar() {
   };
 
   const handleFormSubmit = (formData) => {
-    // Make a POST request to create a new student
     fetch('http://localhost:8081/api/create_student', {
       method: 'POST',
       headers: {
@@ -44,18 +43,13 @@ function DefaulAppBar() {
       body: JSON.stringify(formData),
     })
       .then((response) => {
-        if (response.ok) {
-          // Handle success, e.g., show a success message or update the list of students
-          console.log('Student registration successful');
-        } else {
-          // Handle errors, e.g., show an error message
+        if (!response.ok) {
           console.error('Student registration failed');
         }
       })
       .catch((error) => {
         console.error('Error registering student:', error);
       });
-      console.log('Form data:', formData);
   };
 
   return (
@@ -74,7 +68,7 @@ function DefaulAppBar() {
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.2rem',	
+              letterSpacing: '.2rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
