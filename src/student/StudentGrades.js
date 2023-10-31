@@ -30,11 +30,13 @@ function StudentGrades({ open, onClose, student }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>{student.codigoCurso}</TableCell>
-                <TableCell>{student.nombreMateria}</TableCell>
-                <TableCell>{student.notaDefinitiva}</TableCell>
-              </TableRow>
+              {Object.keys(student).map(courseKey => (
+                <TableRow key={courseKey}>
+                  <TableCell>{student[courseKey].codigo}</TableCell>
+                  <TableCell>{student[courseKey].nombre}</TableCell>
+                  <TableCell>{student[courseKey].valor}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

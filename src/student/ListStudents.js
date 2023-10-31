@@ -28,7 +28,7 @@ export default function DataTable() {
 
     const [rows, setData] = useState([]);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [selectedStudent, setSelectedStudent] = useState({});
+    const [selectedStudent, setSelectedStudent] = useState(null);
 
     const handleEditClick = (id) => {
         console.log(`Edit icon clicked for ID: ${id}`);
@@ -44,6 +44,7 @@ export default function DataTable() {
         fetch(`http://localhost:8081/api/get_student_summary/${id}`)
             .then(response => response.json())
             .then(data => {
+                console.log("Data received from API:", data); // Verifica que los datos se reciban correctamente
                 setSelectedStudent(data);
                 setIsDialogOpen(true);
             })
@@ -51,7 +52,6 @@ export default function DataTable() {
                 console.error('Error fetching student data:', error);
             });
     };
-
     const tableContainerStyle = {
         margin: 'auto',
         width: '80%'
@@ -74,7 +74,7 @@ export default function DataTable() {
                 pageSizeOptions={[5, 10]}
                 checkboxSelection
             />
-            {isDialogOpen && (
+            {isDialogOpen && selectedStudent && (
                 <StudentGrades
                     open={isDialogOpen}
                     onClose={() => setIsDialogOpen(false)}
