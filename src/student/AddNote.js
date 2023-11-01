@@ -51,10 +51,10 @@ function CalificacionesForm({ open, onClose, onAdd }) {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
-          Cancel
+          Cancelar
         </Button>
         <Button onClick={handleFormSubmit} color="primary">
-          Submit
+          Agregar
         </Button>
       </DialogActions>
     </Dialog>

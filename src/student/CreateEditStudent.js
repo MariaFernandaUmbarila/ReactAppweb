@@ -79,7 +79,7 @@ function PopupForm({ open, onClose, onRegister, formData }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">
-            Cancel
+            Cancelar
           </Button>
           <Button type="submit" color="primary">
             Registrar
