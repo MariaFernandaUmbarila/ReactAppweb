@@ -38,10 +38,16 @@ export default function DataTable() {
     const [editedStudent, setEditedStudent] = useState(null);
 
     const updateStudentList = () => {
-        fetch('http://localhost:8081/api/get_all_students')
+        return fetch('http://localhost:8081/api/get_all_students')
             .then((response) => response.json())
-            .then((data) => setData(data))
-            .catch((error) => console.error('Error fetching data:', error));
+            .then((data) => {
+                setData(data); // Actualiza la lista de estudiantes con los datos recibidos
+                return data; // Devuelve los datos actualizados
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                throw error; // Propaga el error para que lo manejes en otro lugar
+            });
     };
 
 
@@ -86,19 +92,18 @@ export default function DataTable() {
             },
             body: JSON.stringify(editedData), // Datos editados
         })
-            .then((response) => {
-                if (response.ok) {
-                    updateStudentList()
-                    .then((response) => response.json());
-                } else {
-                    throw new Error('Error al actualizar el estudiante');
-                }
-            })
-            .catch((error) => {
-                throw error; // Propaga el error para que lo manejes en otro lugar
-            });
-    }
-
+        .then((response) => {
+            if (response.ok) {
+                return updateStudentList(); // Devuelve la promesa de la actualización de la lista
+            } else {
+                throw new Error('Error al actualizar el estudiante');
+            }
+        })
+        .catch((error) => {
+            throw error; // Propaga el error para que lo manejes en otro lugar
+        });
+    };
+    
     const tableContainerStyle = {
         margin: 'auto',
         width: '80%'
