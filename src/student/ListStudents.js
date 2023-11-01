@@ -92,18 +92,29 @@ export default function DataTable() {
             },
             body: JSON.stringify(editedData), // Datos editados
         })
-        .then((response) => {
-            if (response.ok) {
-                return updateStudentList(); // Devuelve la promesa de la actualización de la lista
-            } else {
-                throw new Error('Error al actualizar el estudiante');
-            }
-        })
-        .catch((error) => {
-            throw error; // Propaga el error para que lo manejes en otro lugar
-        });
+            .then((response) => {
+                if (response.ok) {
+                    return updateStudentList(); // Devuelve la promesa de la actualización de la lista
+                } else {
+                    throw new Error('Error al actualizar el estudiante');
+                }
+            })
+            .catch((error) => {
+                throw error; // Propaga el error para que lo manejes en otro lugar
+            });
     };
-    
+
+    const updateEditedStudent = (id, updatedData) => {
+        const updatedRows = rows.map((student) => {
+            if (student.id === id) {
+                return { ...student, ...updatedData };
+            }
+            return student;
+        });
+
+        setData(updatedRows);
+    };
+
     const tableContainerStyle = {
         margin: 'auto',
         width: '80%'
@@ -136,8 +147,8 @@ export default function DataTable() {
                     onClose={() => setIsFormOpen(false)}
                     onRegister={(editedData) => {
                         updateStudentData(editedStudent.id, editedData)
-                            .then((data) => {
-                                setData(data);
+                            .then(() => {
+                                updateEditedStudent(editedStudent.id, editedData); // Actualiza la fila en lugar de toda la lista
                                 setIsFormOpen(false);
                             })
                             .catch((error) => {
