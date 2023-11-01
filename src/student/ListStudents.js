@@ -123,13 +123,11 @@ export default function DataTable() {
                     onRegister={(editedData) => {
                         updateStudentData(editedStudent.id, editedData)
                             .then((data) => {
-                                // Actualiza el estado 'rows' con los datos actualizados
                                 setData(data);
-                                setIsFormOpen(false); // Cierra el formulario después de la actualización
+                                setIsFormOpen(false);
                             })
                             .catch((error) => {
                                 console.error('Error al actualizar el estudiante:', error);
-                                // Manejo de errores
                             });
                     }}
                     formData={editedStudent}

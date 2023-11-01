@@ -95,7 +95,6 @@ function DefaulAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem onClick={handleFormOpen}>Registrar estudiante</MenuItem>
             </Menu>
             <PopupForm open={isFormOpen} onClose={handleFormClose} onRegister={handleFormSubmit} />          </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
