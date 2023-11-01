@@ -37,6 +37,14 @@ export default function DataTable() {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editedStudent, setEditedStudent] = useState(null);
 
+    const updateStudentList = () => {
+        fetch('http://localhost:8081/api/get_all_students')
+            .then((response) => response.json())
+            .then((data) => setData(data))
+            .catch((error) => console.error('Error fetching data:', error));
+    };
+
+
     const handleEditClick = (id) => {
         // Buscar al estudiante en 'rows' con el ID correspondiente
         const studentToEdit = rows.find((student) => student.id === id);
@@ -47,9 +55,14 @@ export default function DataTable() {
     };
 
     const handleDeleteClick = (id) => {
-        fetch('http://localhost:8081/api/delete_student/' + id)
-            .then((response) => response.json())
-            .catch((error) => console.error('Error fetching data:', error));
+        fetch('http://localhost:8081/api/delete_student/' + id, {
+            method: 'DELETE',
+        })
+            .then(() => {
+                // Después de la eliminación, actualizar la lista de estudiantes
+                updateStudentList();
+            })
+            .catch((error) => console.error('Error al eliminar el estudiante:', error));
     };
 
     const handleNotesClick = (id) => {
@@ -75,9 +88,8 @@ export default function DataTable() {
         })
             .then((response) => {
                 if (response.ok) {
-                    // Si la actualización es exitosa, obtén los datos actualizados
-                    return fetch('http://localhost:8081/api/get_all_students')
-                        .then((response) => response.json());
+                    updateStudentList()
+                    .then((response) => response.json());
                 } else {
                     throw new Error('Error al actualizar el estudiante');
                 }
@@ -93,10 +105,7 @@ export default function DataTable() {
     };
 
     useEffect(() => {
-        fetch('http://localhost:8081/api/get_all_students')
-            .then((response) => response.json())
-            .then((data) => setData(data))
-            .catch((error) => console.error('Error fetching data:', error));
+        updateStudentList();
     }, []);
 
     return (

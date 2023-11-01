@@ -8,10 +8,32 @@ import TextField from '@mui/material/TextField';
 
 function PopupForm({ open, onClose, onRegister }) {
   const [formData, setFormData] = useState({ nombre: '', apellido: '', correo: '' });
+  const [errors, setErrors] = useState({ correo: '' });
 
-  const handleFormSubmit = () => {
-    onRegister(formData);
-    onClose();
+  const validateForm = () => {
+    const newErrors = { ...errors };
+
+    // Validar el campo 'correo'
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(formData.correo)) {
+      newErrors.correo = 'La dirección de correo electrónico no es válida';
+    } else {
+      newErrors.correo = '';
+    }
+
+    setErrors(newErrors);
+
+    // Devolver true si no hay errores, lo que permite enviar el formulario
+    return Object.values(newErrors).every((error) => error === '');
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault(); // Evita el envío del formulario por defecto
+
+    if (validateForm()) {
+      onRegister(formData);
+      onClose();
+    }
   };
 
   const handleInputChange = (e) => {
@@ -21,38 +43,45 @@ function PopupForm({ open, onClose, onRegister }) {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Nuevo Estudiante</DialogTitle>
-      <DialogContent>
-        <TextField
-          name="nombre"
-          label="Nombre"
-          fullWidth
-          value={formData.nombre}
-          onChange={handleInputChange}
-        />
-        <TextField
-          name="apellido"
-          label="Apellido"
-          fullWidth
-          value={formData.apellido}
-          onChange={handleInputChange}
-        />
-        <TextField
-          name="correo"
-          label="Correo"
-          fullWidth
-          value={formData.correo}
-          onChange={handleInputChange}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={handleFormSubmit} color="primary">
-          Registrar
-        </Button>
-      </DialogActions>
+      <form onSubmit={handleFormSubmit}>
+        <DialogTitle>Nuevo Estudiante</DialogTitle>
+        <DialogContent>
+          <TextField
+            name="nombre"
+            label="Nombre"
+            fullWidth
+            value={formData.nombre}
+            onChange={handleInputChange}
+            required
+          />
+          <TextField
+            name="apellido"
+            label="Apellido"
+            fullWidth
+            value={formData.apellido}
+            onChange={handleInputChange}
+            required
+          />
+          <TextField
+            name="correo"
+            label="Correo"
+            fullWidth
+            value={formData.correo}
+            onChange={handleInputChange}
+            required
+            error={!!errors.correo}
+            helperText={errors.correo}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose} color="primary">
+            Cancel
+          </Button>
+          <Button type="submit" color="primary">
+            Registrar
+          </Button>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 }
