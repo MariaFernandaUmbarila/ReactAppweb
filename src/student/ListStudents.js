@@ -4,6 +4,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import MultiIconCell from "./IconsStudent";
 import StudentGrades from './StudentGrades';
 import PopupForm from './CreateEditStudent.js';
+import CalificacionesForm from './AddNote.js';
+
 
 export default function DataTable() {
 
@@ -17,6 +19,7 @@ export default function DataTable() {
                 <MultiIconCell
                     onEdit={() => handleEditClick(params.row.id)}
                     onDelete={() => handleDeleteClick(params.row.id)}
+                    onAddNote={() => handleaddNoteClick(params.row.id)}
                 />
             )
         },
@@ -35,6 +38,7 @@ export default function DataTable() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isNoteFormOpen, setIsNoteFormOpen] = useState(false);
     const [editedStudent, setEditedStudent] = useState(null);
 
     const updateStudentList = () => {
@@ -70,6 +74,14 @@ export default function DataTable() {
             })
             .catch((error) => console.error('Error al eliminar el estudiante:', error));
     };
+
+    const handleaddNoteClick = (id) => {
+        if (isNoteFormOpen) {
+            setIsNoteFormOpen(false);
+          } else {
+            setIsNoteFormOpen(true);
+          }
+        };
 
     const handleNotesClick = (id) => {
         fetch(`http://localhost:8081/api/get_student_summary/${id}`)
@@ -158,6 +170,11 @@ export default function DataTable() {
                     formData={editedStudent}
                 />
             )}
+            <CalificacionesForm
+        open={isNoteFormOpen}
+        onClose={() => setIsNoteFormOpen(false)}
+        onAdd={handleaddNoteClick}
+      />
         </div >
     );
 }
