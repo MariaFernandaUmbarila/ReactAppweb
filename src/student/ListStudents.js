@@ -64,6 +64,28 @@ export default function DataTable() {
             });
     };
 
+    function updateStudentData(id, editedData) {
+        // Envía los datos editados al servidor para la actualización
+        return fetch(`http://localhost:8081/api/update_student/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(editedData), // Datos editados
+        })
+            .then((response) => {
+                if (response.ok) {
+                    // Si la actualización es exitosa, obtén los datos actualizados
+                    return fetch('http://localhost:8081/api/get_all_students')
+                        .then((response) => response.json());
+                } else {
+                    throw new Error('Error al actualizar el estudiante');
+                }
+            })
+            .catch((error) => {
+                throw error; // Propaga el error para que lo manejes en otro lugar
+            });
+    }
 
     const tableContainerStyle = {
         margin: 'auto',
@@ -99,11 +121,18 @@ export default function DataTable() {
                     open={isFormOpen}
                     onClose={() => setIsFormOpen(false)}
                     onRegister={(editedData) => {
-                        // Aquí puedes enviar los datos editados al servidor y actualizar tus datos en la aplicación
-                        // Luego, cierra el formulario
-                        setIsFormOpen(false);
+                        updateStudentData(editedStudent.id, editedData)
+                            .then((data) => {
+                                // Actualiza el estado 'rows' con los datos actualizados
+                                setData(data);
+                                setIsFormOpen(false); // Cierra el formulario después de la actualización
+                            })
+                            .catch((error) => {
+                                console.error('Error al actualizar el estudiante:', error);
+                                // Manejo de errores
+                            });
                     }}
-                    formData={editedStudent} // Pasa los datos del estudiante a editar al formulario
+                    formData={editedStudent}
                 />
             )}
         </div >
