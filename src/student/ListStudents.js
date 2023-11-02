@@ -144,7 +144,6 @@ export default function DataTable() {
                 rows={rows}
                 columns={columns}
                 pageSizeOptions={[5, 10]}
-                checkboxSelection
             />
             {isDialogOpen && selectedStudent && (
                 <StudentGrades
