@@ -12,42 +12,48 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 function StudentGrades({ open, onClose, student }) {
+
+  console.log(open, onClose, student);
+
   const handleClose = () => {
     onClose();
   };
 
-  return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Detalle del Estudiante </DialogTitle>
-      <DialogContent>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Código de Curso</TableCell>
-                <TableCell>Nombre de la Materia</TableCell>
-                <TableCell>Nota Definitiva</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.keys(student).map(courseKey => (
-                <TableRow key={courseKey}>
-                  <TableCell>{student[courseKey].codigo}</TableCell>
-                  <TableCell>{student[courseKey].nombre}</TableCell>
-                  <TableCell>{student[courseKey].valor}</TableCell>
+  if (student !== undefined){
+    return (
+      <Dialog open={open} onClose={handleClose}>      
+        <DialogTitle>Detalle del Estudiante {student["item1"].estudiante}</DialogTitle> 
+        <DialogContent>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Código de Curso</TableCell>
+                  <TableCell>Nombre de la Materia</TableCell>
+                  <TableCell>Nota Definitiva</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Cerrar
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+              </TableHead>
+              <TableBody>
+                {Object.keys(student).map(courseKey => (
+                  <TableRow key={courseKey}>
+                    <TableCell>{student[courseKey].codigo}</TableCell>
+                    <TableCell>{student[courseKey].nombre}</TableCell>
+                    <TableCell>{student[courseKey].valor}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+  
 }
 
 export default StudentGrades;

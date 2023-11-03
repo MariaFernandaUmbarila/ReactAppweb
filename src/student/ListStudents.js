@@ -87,8 +87,10 @@ export default function DataTable() {
         fetch(`http://localhost:8081/api/get_student_summary/${id}`)
             .then(response => response.json())
             .then(data => {
-                setSelectedStudent(data);
-                setIsDialogOpen(true);
+                if (Object.keys(data).length > 0) {
+                    setSelectedStudent(data);
+                    setIsDialogOpen(true);
+                }
             })
             .catch(error => {
                 console.error('Error fetching student data:', error);
@@ -145,13 +147,15 @@ export default function DataTable() {
                 columns={columns}
                 pageSizeOptions={[5, 10]}
             />
-            {isDialogOpen && selectedStudent && (
+
+            {isDialogOpen && selectedStudent && setSelectedStudent &&(
                 <StudentGrades
                     open={isDialogOpen}
                     onClose={() => setIsDialogOpen(false)}
                     student={selectedStudent}
                 />
             )}
+
             {isFormOpen && editedStudent && (
                 <PopupForm
                     open={isFormOpen}
@@ -170,10 +174,10 @@ export default function DataTable() {
                 />
             )}
             <CalificacionesForm
-        open={isNoteFormOpen}
-        onClose={() => setIsNoteFormOpen(false)}
-        onAdd={handleaddNoteClick}
-      />
+                open={isNoteFormOpen}
+                onClose={() => setIsNoteFormOpen(false)}
+                onAdd={handleaddNoteClick}
+            />
         </div >
     );
 }

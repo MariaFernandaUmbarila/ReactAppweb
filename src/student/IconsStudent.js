@@ -15,9 +15,9 @@ function MultiIconCell({ onEdit, onDelete, onAddNote }) {
             <span title="Eliminar estudiante" aria-label="Eliminar estudiante">
                 <DeleteOutlineOutlinedIcon onClick={onDelete} style={iconStyle}/>
             </span>
-            <span title="Agregar calificación" aria-label="Agregar calificación">
+            {/* <span title="Agregar calificación" aria-label="Agregar calificación">
                 <AddCircleOutlinedIcon onClick={onAddNote} style={iconStyle}/>
-            </span>
+            </span> */}
         </div>
     );
 }
