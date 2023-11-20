@@ -50,7 +50,9 @@ function PopupForm({ open, onClose, onRegister, formData }) {
       <form onSubmit={handleFormSubmit}>
         <DialogTitle>Nuevo Estudiante</DialogTitle>
         <DialogContent>
-          <TextField
+          <br></br>
+          <TextField 
+            style={{marginBottom: '12px'}}
             name="nombre"
             label="Nombre"
             fullWidth
@@ -58,7 +60,9 @@ function PopupForm({ open, onClose, onRegister, formData }) {
             onChange={handleInputChange}
             required
           />
+          <br></br>
           <TextField
+            style={{marginBottom: '12px'}}
             name="apellido"
             label="Apellido"
             fullWidth
@@ -67,6 +71,7 @@ function PopupForm({ open, onClose, onRegister, formData }) {
             required
           />
           <TextField
+            style={{marginBottom: '12px'}}
             name="correo"
             label="Correo"
             fullWidth

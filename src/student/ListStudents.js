@@ -15,7 +15,7 @@ export default function DataTable() {
         { field: "Apellido", headerName: "Apellido", width: 130, valueGetter: (params) => params.row.apellido },
         { field: "Correo", headerName: "Correo", width: 250, valueGetter: (params) => params.row.correo },
         {
-            field: "Acciones", headerName: "Acciones", width: 250, renderCell: (params) => (
+            field: "Acciones", headerName: "Acciones", width: 90, renderCell: (params) => (
                 <MultiIconCell
                     onEdit={() => handleEditClick(params.row.id)}
                     onDelete={() => handleDeleteClick(params.row.id)}
@@ -75,13 +75,13 @@ export default function DataTable() {
             .catch((error) => console.error('Error al eliminar el estudiante:', error));
     };
 
-    const handleaddNoteClick = (id) => {
+    const handleaddNoteClick = () => {
         if (isNoteFormOpen) {
             setIsNoteFormOpen(false);
           } else {
             setIsNoteFormOpen(true);
           }
-        };
+    };
 
     const handleNotesClick = (id) => {
         fetch(`http://localhost:8081/api/get_student_summary/${id}`)
